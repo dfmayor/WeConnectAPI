@@ -1,4 +1,4 @@
-#bin
-#obj
-#Migrations
-#.vscode
+bin
+obj
+Migrations
+.vscode
