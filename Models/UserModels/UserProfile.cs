@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 
@@ -5,7 +6,8 @@ namespace WeConnectAPI.Models.UserModels
 {
     public class UserProfile
     {
-        public int Id { get; set; }
+        [Key]
+        public Guid Id { get; set; }
         public string ApplicationUserId { get; set; }
         [ForeignKey("ApplicationUserId")]
         public ApplicationUser ApplicationUser { get; set; }

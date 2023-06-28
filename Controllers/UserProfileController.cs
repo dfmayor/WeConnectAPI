@@ -51,13 +51,13 @@ namespace WeConnectAPI.Controllers
                 {
                     Status = HttpStatusCode.BadRequest.ToString(),
                     Message = $"User Profile Creation Failed: {ex.Message}",
-                    Data = {}
+                    Data = null
                 };
             }
         }
 
         [HttpGet]
-        [Authorize]
+        //[Authorize]
         [Route("get-user-profile-by-id")]
         public async Task<GenericResponses> UserProfileById(string Id)
         {
@@ -96,7 +96,7 @@ namespace WeConnectAPI.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        //[Authorize]
         [Route("get-all-user-profiles")]
         public async Task<List<UserProfile>> UserProfileList()
         {

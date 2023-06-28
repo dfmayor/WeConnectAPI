@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using WeConnectAPI.Models;
 using WeConnectAPI.Models.BaseModels;
 using WeConnectAPI.Models.RoleModels;
 using WeConnectAPI.Models.UserModels;
@@ -13,8 +14,12 @@ namespace WeConnectAPI.Data
         {
             
         }
-        //public DbSet<ApplicationUser> Users { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<GigReview> GigReviews { get; set; }
+        public DbSet<GigModel> GigModels { get; set; }
+        public DbSet<Review> Reviews { get; set; }
+        public DbSet<OrderModel> OrderModels { get; set; }
 
         // public override int SaveChanges()
         // {
@@ -42,6 +47,27 @@ namespace WeConnectAPI.Data
                 .HasOne(u => u.ApplicationUser)
                 .WithOne()
                 .HasForeignKey<UserProfile>(u => u.ApplicationUserId);
+
+            modelBuilder.Entity<GigReview>()
+                .HasKey(gr => gr.GigReviewId);
+
+            modelBuilder.Entity<GigReview>()
+                .HasOne(gr => gr.Gig)
+                .WithMany(g => g.GigReviews)
+                .HasForeignKey(gr => gr.GigId);
+
+            modelBuilder.Entity<GigReview>()
+                .HasOne(gr => gr.Review)
+                .WithMany(r => r.GigReviews)
+                .HasForeignKey(gr => gr.ReviewId);
+            
+            modelBuilder.Entity<GigModel>()
+                .Property(g => g.Price)
+                .HasColumnType("decimal(18, 2)");
+
+            modelBuilder.Entity<Review>()
+                .Property(r => r.Rating)
+                .HasDefaultValue(0.0);
         }
     }
 }

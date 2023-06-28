@@ -12,8 +12,8 @@ using WeConnectAPI.Data;
 namespace WeConnectAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230618171556_initialCreate")]
-    partial class initialCreate
+    [Migration("20230628144335_initalCreate")]
+    partial class initalCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -42,12 +42,17 @@ namespace WeConnectAPI.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
+                    b.Property<Guid?>("UserProfileId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
                         .HasDatabaseName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.HasIndex("UserProfileId");
 
                     b.ToTable("AspNetRoles", (string)null);
                 });
@@ -158,6 +163,155 @@ namespace WeConnectAPI.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("WeConnectAPI.Models.Category", b =>
+                {
+                    b.Property<Guid>("CategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("CategoryId");
+
+                    b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("WeConnectAPI.Models.GigModel", b =>
+                {
+                    b.Property<Guid>("GigId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DeliveryTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GigPicture")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("GigId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("GigModels");
+                });
+
+            modelBuilder.Entity("WeConnectAPI.Models.GigReview", b =>
+                {
+                    b.Property<Guid>("GigReviewId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GigId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ReviewId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("GigReviewId");
+
+                    b.HasIndex("GigId");
+
+                    b.HasIndex("ReviewId");
+
+                    b.ToTable("GigReviews");
+                });
+
+            modelBuilder.Entity("WeConnectAPI.Models.OrderModel", b =>
+                {
+                    b.Property<Guid>("OrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("GigId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("details")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("status")
+                        .HasColumnType("bit");
+
+                    b.HasKey("OrderId");
+
+                    b.HasIndex("GigId");
+
+                    b.ToTable("OrderModels");
+                });
+
+            modelBuilder.Entity("WeConnectAPI.Models.Review", b =>
+                {
+                    b.Property<Guid>("ReviewId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("Rating")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("float")
+                        .HasDefaultValue(0.0);
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("ReviewId");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.ToTable("Reviews");
+                });
+
             modelBuilder.Entity("WeConnectAPI.Models.UserModels.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
@@ -243,11 +397,9 @@ namespace WeConnectAPI.Migrations
 
             modelBuilder.Entity("WeConnectAPI.Models.UserModels.UserProfile", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -291,6 +443,13 @@ namespace WeConnectAPI.Migrations
                         .IsUnique();
 
                     b.ToTable("UserProfiles");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+                {
+                    b.HasOne("WeConnectAPI.Models.UserModels.UserProfile", null)
+                        .WithMany("Roles")
+                        .HasForeignKey("UserProfileId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -344,6 +503,62 @@ namespace WeConnectAPI.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("WeConnectAPI.Models.GigModel", b =>
+                {
+                    b.HasOne("WeConnectAPI.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WeConnectAPI.Models.UserModels.ApplicationUser", "User")
+                        .WithMany("Gigs")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("WeConnectAPI.Models.GigReview", b =>
+                {
+                    b.HasOne("WeConnectAPI.Models.GigModel", "Gig")
+                        .WithMany("GigReviews")
+                        .HasForeignKey("GigId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WeConnectAPI.Models.Review", "Review")
+                        .WithMany("GigReviews")
+                        .HasForeignKey("ReviewId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Gig");
+
+                    b.Navigation("Review");
+                });
+
+            modelBuilder.Entity("WeConnectAPI.Models.OrderModel", b =>
+                {
+                    b.HasOne("WeConnectAPI.Models.GigModel", "Gig")
+                        .WithMany()
+                        .HasForeignKey("GigId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Gig");
+                });
+
+            modelBuilder.Entity("WeConnectAPI.Models.Review", b =>
+                {
+                    b.HasOne("WeConnectAPI.Models.UserModels.ApplicationUser", null)
+                        .WithMany("Reviews")
+                        .HasForeignKey("ApplicationUserId");
+                });
+
             modelBuilder.Entity("WeConnectAPI.Models.UserModels.UserProfile", b =>
                 {
                     b.HasOne("WeConnectAPI.Models.UserModels.ApplicationUser", "ApplicationUser")
@@ -353,6 +568,28 @@ namespace WeConnectAPI.Migrations
                         .IsRequired();
 
                     b.Navigation("ApplicationUser");
+                });
+
+            modelBuilder.Entity("WeConnectAPI.Models.GigModel", b =>
+                {
+                    b.Navigation("GigReviews");
+                });
+
+            modelBuilder.Entity("WeConnectAPI.Models.Review", b =>
+                {
+                    b.Navigation("GigReviews");
+                });
+
+            modelBuilder.Entity("WeConnectAPI.Models.UserModels.ApplicationUser", b =>
+                {
+                    b.Navigation("Gigs");
+
+                    b.Navigation("Reviews");
+                });
+
+            modelBuilder.Entity("WeConnectAPI.Models.UserModels.UserProfile", b =>
+                {
+                    b.Navigation("Roles");
                 });
 #pragma warning restore 612, 618
         }

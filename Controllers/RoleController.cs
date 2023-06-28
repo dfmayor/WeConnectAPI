@@ -149,13 +149,26 @@ namespace WeConnectAPI.Controllers
                 }
                 else
                 {
-                    await _userManager.AddToRolesAsync(user, roleNames);
-                    return new GenericResponses()
+                    // wait for the `AddToRolesAsync` method to finish executing
+                    var roleAdded = await _userManager.AddToRolesAsync(user, new[] { changeRoleDto.RoleName });
+                    if (roleAdded.Succeeded)
                     {
-                        Status = HttpStatusCode.OK.ToString(),
-                        Message = $"{changeRoleDto.RoleName} Role Added To {user.UserName}",
-                        Data = true
-                    };
+                        return new GenericResponses()
+                        {
+                            Status = HttpStatusCode.OK.ToString(),
+                            Message = $"{changeRoleDto.RoleName} Role Added To {user.UserName}",
+                            Data = true
+                        };
+                    }
+                    else
+                    {
+                        return new GenericResponses()
+                        {
+                            Status = HttpStatusCode.OK.ToString(),
+                            Message = "Failed to add role",
+                            Data = roleAdded.Errors
+                        };
+                    }
                 }
             }
             else
@@ -170,3 +183,22 @@ namespace WeConnectAPI.Controllers
         }
     }
 }
+
+
+
+// UserProfile userProfile = new UserProfile();
+// userProfile.AddRole(new IdentityRole("Admin"));
+// userProfile.AddRole(new IdentityRole("User"));
+
+// UserProfile userProfile = new UserProfile();
+
+// // Create a list of IdentityRole objects.
+// List<IdentityRole> roles = new List<IdentityRole>();
+// roles.Add(new IdentityRole("Admin"));
+// roles.Add(new IdentityRole("User"));
+
+// // Add the roles to the user profile.
+// userProfile.AddRoles(roles);
+
+// // Save the user profile.
+// userProfile.Save();
