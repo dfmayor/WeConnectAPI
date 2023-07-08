@@ -21,7 +21,7 @@ namespace WeConnectAPI.Handler.UserProfileHandlers
 
         public async Task<UserProfile> Handle(UpdateUserProfileCommand request, CancellationToken cancellationToken)
         {
-            // finf user profile with the request.ApplicationUserId 
+            // find user profile with the request.ApplicationUserId 
             var profile = _dbContext.UserProfiles.Where(u => u.ApplicationUserId == request.ApplicationUser.Id).FirstOrDefault();
             if (profile != null)
             {

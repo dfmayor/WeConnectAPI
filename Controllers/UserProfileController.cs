@@ -82,7 +82,6 @@ namespace WeConnectAPI.Controllers
                         Data = null,
                     };
                 }
-                
             }
             catch (Exception ex)
             {

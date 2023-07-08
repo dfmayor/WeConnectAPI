@@ -13,6 +13,9 @@ using WeConnectAPI.Data;
 using WeConnectAPI.Models.UserModels;
 using WeConnectAPI.Services.UserServices;
 using MediatR;
+using WeConnectAPI.Services.GigServices;
+using WatchDog;
+using WatchDog.src.Enums;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,6 +47,9 @@ builder.Services.Configure<IdentityOptions>(options =>
 
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IUserProfileService, UserProfileService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IGigModelService, GigModelService>();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -78,6 +84,14 @@ builder.Services
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
         };
     });
+
+// add watch dog
+builder.Services.AddWatchDogServices(opt => {
+    opt.IsAutoClear = false;
+    opt.ClearTimeSchedule = WatchDogAutoClearScheduleEnum.Monthly;
+    opt.SetExternalDbConnString = builder.Configuration.GetConnectionString(name:"conn");
+    opt.DbDriverOption = WatchDogDbDriverEnum.MSSQL;
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -93,4 +107,11 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+app.UseWatchDogExceptionLogger();
+app.UseWatchDog(opt => {
+    opt.WatchPageUsername = "mayowafunmi";
+    opt.WatchPagePassword = "mayowafunmi";
+});
+
 app.Run();
+//"conn": "Data Source=DESKTOP-ATPKAS5;Initial Catalog=WeConnectApp;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False"

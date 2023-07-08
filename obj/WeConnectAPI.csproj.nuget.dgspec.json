@@ -85,6 +85,10 @@
             "Swashbuckle.AspNetCore.Filters": {
               "target": "Package",
               "version": "[7.0.6, )"
+            },
+            "WatchDog.NET": {
+              "target": "Package",
+              "version": "[1.4.10, )"
             }
           },
           "imports": [

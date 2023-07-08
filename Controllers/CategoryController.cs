@@ -18,6 +18,7 @@ namespace WeConnectAPI.Controllers
         }
 
         [HttpPost]
+        [Route("add_category")]
         public async Task<GenericResponses> AddCategory([FromBody] string categoryName)
         {
             Category category = new Category
@@ -48,6 +49,7 @@ namespace WeConnectAPI.Controllers
         }
 
         [HttpGet]
+        [Route("all_categories")]
         public async Task<GenericResponses> GetCategoriesList()
         {
             var result = await _categoryService.GetCategoriesList();
@@ -71,5 +73,54 @@ namespace WeConnectAPI.Controllers
             }
         }
 
+        [HttpPut]
+        [Route("update_category")]
+        public async Task<GenericResponses> UpdateCategory(string categoryName, string editedName)
+        {
+            var result = await _categoryService.UpdateCategory(categoryName, editedName);
+            if (result != null)
+            {
+                return new GenericResponses()
+                {
+                    Status = HttpStatusCode.OK.ToString(),
+                    Message = "Category Name Updated Successfully",
+                    Data = result
+                };
+            }
+            else
+            {
+                return new GenericResponses()
+                {
+                    Status = HttpStatusCode.BadRequest.ToString(),
+                    Message = "Failed To Update Category",
+                    Data = null
+                };
+            }
+        }
+
+        [HttpDelete]
+        [Route("delete_category")]
+        public async Task<GenericResponses> DeleteCategory(string name)
+        {
+            var result = await _categoryService.DeleteCategory(name);
+            if (result)
+            {
+                return new GenericResponses()
+                {
+                    Status = HttpStatusCode.OK.ToString(),
+                    Message = "Category Deleted Successfully",
+                    Data = result
+                };
+            }
+            else
+            {
+                return new GenericResponses()
+                {
+                    Status = HttpStatusCode.BadRequest.ToString(),
+                    Message = "Category does not exist!!!",
+                    Data = result
+                };
+            }
+        }
     }
 }

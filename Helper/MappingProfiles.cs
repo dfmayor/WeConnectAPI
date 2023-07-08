@@ -1,5 +1,6 @@
 using AutoMapper;
 using WeConnectAPI.DTOs;
+using WeConnectAPI.Models;
 using WeConnectAPI.Models.UserModels;
 
 namespace WeConnectAPI.Helper
@@ -9,7 +10,7 @@ namespace WeConnectAPI.Helper
         public MappingProfiles()
         {
             CreateMap<UserProfileDto, UserProfile>();
-            //CreateMap<UpdateUserProfileDto, UserProfile>();
+            CreateMap<GigModelDto, GigModel>();
         }
     }
 }

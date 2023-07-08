@@ -19,9 +19,19 @@ namespace WeConnectAPI.Services.GigServices
             return result.Entity;
         }
 
-        public Task<Category> DeleteCategory(string name)
+        public async Task<bool> DeleteCategory(string name)
         {
-            throw new NotImplementedException();
+            var category = _dbcontext.Categories.FirstOrDefault(c => c.Name == name);
+            if (category != null)
+            {
+                _dbcontext.Categories.Remove(category);
+                await _dbcontext.SaveChangesAsync();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public async Task<List<Category>> GetCategoriesList()
@@ -34,9 +44,20 @@ namespace WeConnectAPI.Services.GigServices
             return categoryList;
         }
 
-        public Task<Category> UpdateCategory(string categoryName, string editedName)
+        public async Task<Category> UpdateCategory(string categoryName, string editedName)
         {
-            throw new NotImplementedException();
+            var category = _dbcontext.Categories.FirstOrDefault(c => c.Name == categoryName);
+            if (category != null)
+            {
+                category.Name = editedName;
+                category.UpdatedAt = DateTime.Now;
+                await _dbcontext.SaveChangesAsync();
+                return category;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

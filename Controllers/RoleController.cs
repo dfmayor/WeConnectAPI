@@ -181,24 +181,90 @@ namespace WeConnectAPI.Controllers
                 };
             }
         }
+
+        // remove role from user
+        [HttpDelete]
+        [Route("remove-user-from-role")]
+        public async Task<GenericResponses> RemoveRoleFromUser([FromBody] ChangeRoleDto changeRoleDto)
+        {
+            var user = await _userManager.FindByIdAsync(changeRoleDto.UserId);
+            if (user != null)
+            {
+                var roleNames = await _userManager.GetRolesAsync(user);
+                bool roleExists = roleNames.Contains(changeRoleDto.RoleName);
+                if (roleExists)
+                {
+                    var roleRemoved = await _userManager.RemoveFromRolesAsync(user, new[] { changeRoleDto.RoleName });
+                    if (roleRemoved.Succeeded)
+                    {
+                        return new GenericResponses()
+                        {
+                            Status = HttpStatusCode.OK.ToString(),
+                            Message = $"User {user.UserName} Removed From Role {changeRoleDto.RoleName} Successfully",
+                            Data = true
+                        };
+                    }
+                    else
+                    {
+                        return new GenericResponses()
+                        {
+                            Status = HttpStatusCode.BadRequest.ToString(),
+                            Message = $"Failed to remove User {user.UserName} from Role {changeRoleDto.RoleName}",
+                            Data = false
+                        };
+                    }
+                }
+                else
+                {
+                    return new GenericResponses()
+                    {
+                        Status = HttpStatusCode.BadRequest.ToString(),
+                        Message = $"{user.UserName} Does Not Have Role {changeRoleDto.RoleName}",
+                        Data = null
+                    };
+                }
+            }
+            else
+            {
+                return new GenericResponses()
+                {
+                    Status = HttpStatusCode.NotFound.ToString(),
+                    Message = "User not found",
+                    Data = null
+                };
+            }
+        }
+
+        // get all users by role name
+        [HttpGet]
+        [Route("get-all-users-by-role")]
+        public async Task<GenericResponses> GetUsersByRole([FromBody] string roleName)
+        {
+            var role = await _roleManager.FindByNameAsync(roleName);
+            if (role == null)
+            {
+                return new GenericResponses()
+                {
+                    Status = HttpStatusCode.BadRequest.ToString(),
+                    Message = "User not found",
+                    Data = null
+                };
+            }
+
+            var usersInRole = await _userManager.GetUsersInRoleAsync(role.Name);
+            return new GenericResponses()
+            {
+                Status = HttpStatusCode.OK.ToString(),
+                Message = $"Users having role {roleName} retrieved successfully",
+                Data = usersInRole
+            };
+        }
     }
 }
 
 
 
-// UserProfile userProfile = new UserProfile();
-// userProfile.AddRole(new IdentityRole("Admin"));
-// userProfile.AddRole(new IdentityRole("User"));
-
-// UserProfile userProfile = new UserProfile();
-
-// // Create a list of IdentityRole objects.
-// List<IdentityRole> roles = new List<IdentityRole>();
-// roles.Add(new IdentityRole("Admin"));
-// roles.Add(new IdentityRole("User"));
-
-// // Add the roles to the user profile.
-// userProfile.AddRoles(roles);
-
-// // Save the user profile.
-// userProfile.Save();
+// change role status== user -> sellers, user => admin, user => buyer etc
+// list all users
+// list users by roles
+// show count of users by roles - how many buyers, sellers etc

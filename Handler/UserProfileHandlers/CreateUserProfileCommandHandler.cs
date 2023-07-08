@@ -1,6 +1,4 @@
-using System.Security.Claims;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 using WeConnectAPI.Command.UserProfileCommand;
 using WeConnectAPI.Models.UserModels;
 using WeConnectAPI.Services.UserServices;
@@ -10,12 +8,10 @@ namespace WeConnectAPI.Handler.UserProfileHandlers
     public class CreateUserProfileCommandHandler : IRequestHandler<CreateUserProfileCommand, UserProfile>
     {
         private readonly IUserProfileService _userProfileService;
-        private readonly UserManager<ApplicationUser> _userManager;
 
-        public CreateUserProfileCommandHandler(IUserProfileService userProfileService, UserManager<ApplicationUser> userManager)
+        public CreateUserProfileCommandHandler(IUserProfileService userProfileService)
         {
             _userProfileService = userProfileService;
-            _userManager = userManager;
         }
 
         public async Task<UserProfile> Handle(CreateUserProfileCommand request, CancellationToken cancellationToken)
