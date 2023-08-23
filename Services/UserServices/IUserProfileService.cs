@@ -1,4 +1,3 @@
-using WeConnectAPI.Command.UserProfileCommand;
 using WeConnectAPI.Models.UserModels;
 
 namespace WeConnectAPI.Services.UserServices
@@ -10,8 +9,5 @@ namespace WeConnectAPI.Services.UserServices
         Task<UserProfile> CreateUserProfile(UserProfile userProfile);
         Task<UserProfile> UpdateUserProfile(UserProfile userProfile);
         Task<UserProfile> DeleteUserProfile(UserProfile userProfile);
-
-        //Task CreateUserProfileAsync(CreateUserProfileCommand command);
-
     }
 }

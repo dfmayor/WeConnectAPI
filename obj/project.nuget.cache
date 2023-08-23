@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "VuZxJ7LinEVotLU4WkgJS2OdeM5AlXdtjI23AEo+izko0lpcqc4wl1l3pFOZTwsOzlfGVblgRv1za7xbN2XLIQ==",
+  "dgSpecHash": "CeBsbqxHBto6V1L5yS6i3dppHAUAmgrv3b58kXnkZSxF5Rjg2WZ49oU92scVxIjsQ7s0N3j7Aec2N0SdcMgTvA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\akina\\projects\\ASPNET\\WeConnectAPI\\WeConnectAPI\\WeConnectAPI.csproj",
+  "projectFilePath": "C:\\Users\\akina\\OneDrive\\Desktop\\projects\\dotnet\\WeConnectAPI\\WeConnectAPI\\WeConnectAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\akina\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\akina\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

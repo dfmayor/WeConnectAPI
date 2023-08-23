@@ -24,9 +24,18 @@ namespace WeConnectAPI.Services.GigServices
             return response.Entity;
         }
 
-        public Task<GigModel> DeleteGigModel(GigModel gigModel)
+        public async Task<bool> DeleteGigModel(GigModel gigModel)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var result = _dbContext.GigModels.Remove(gigModel);
+                await _dbContext.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
 
         public async Task<GigModel> GetGigModelById(Guid Id)

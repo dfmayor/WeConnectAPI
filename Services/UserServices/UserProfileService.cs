@@ -1,9 +1,6 @@
-using MediatR;
-using WeConnectAPI.Command.UserProfileCommand;
 using WeConnectAPI.Data;
 using WeConnectAPI.Models.UserModels;
 using Microsoft.EntityFrameworkCore;
-using WeConnectAPI.Helper;
 using Microsoft.AspNetCore.Identity;
 
 namespace WeConnectAPI.Services.UserServices
@@ -29,9 +26,7 @@ namespace WeConnectAPI.Services.UserServices
         }
 
         public async Task<UserProfile> DeleteUserProfile(UserProfile userProfile)
-        
         {
-            //var userData = _dbContext.UserProfiles.Where(u => u.Id == Id).FirstOrDefault();
             var result = _dbContext.UserProfiles.Remove(userProfile);
             await _dbContext.SaveChangesAsync();
             return result.Entity;

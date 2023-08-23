@@ -22,6 +22,6 @@ namespace WeConnectAPI.Models.UserModels
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
 
-        // gender, marital status, occupation, address, date of birth, nationality, profile picture .... area of specialization, job status
+        // gender, bio, marital status, occupation, address, date of birth, nationality, profile picture .... area of specialization, job status
     }
 }

@@ -8,7 +8,7 @@ namespace WeConnectAPI.Services.GigServices
         Task<GigModel> GetGigModelById(Guid Id);
         Task<GigModel> CreateGigModel(GigModel gigModel);
         Task<GigModel> UpdateGigModel(GigModel gigModel);
-        Task<GigModel> DeleteGigModel(GigModel gigModel);
+        Task<bool> DeleteGigModel(GigModel gigModel);
 
     }
 }

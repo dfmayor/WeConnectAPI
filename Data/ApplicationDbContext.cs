@@ -20,6 +20,7 @@ namespace WeConnectAPI.Data
         public DbSet<GigModel> GigModels { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<OrderModel> OrderModels { get; set; }
+        public DbSet<Education> Educations { get; set; }
 
         // public override int SaveChanges()
         // {

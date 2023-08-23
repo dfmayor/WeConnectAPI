@@ -64,7 +64,7 @@ namespace WeConnectAPI.Controllers
                     Data = {}
                 };
             }
-            await _userManager.AddToRoleAsync(newUser, "User");
+            await _userManager.AddToRoleAsync(newUser, "Users");
             return new GenericResponses()
             {
                 Status = HttpStatusCode.OK.ToString(),

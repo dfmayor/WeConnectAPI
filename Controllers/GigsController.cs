@@ -175,5 +175,30 @@ namespace WeConnectAPI.Controllers
                 };
             }
         }
+
+        [HttpDelete]
+        [Route("delete-gig")]
+        public async Task<GenericResponses> DeleteGig(string id)
+        {
+            try
+            {
+                var gigModel = await _mediator.Send(new DeleteGigModelCommand() {Id = id});
+                return new GenericResponses()
+                {
+                    Status = HttpStatusCode.OK.ToString(),
+                    Message = "Gig Deleted Successfully",
+                    Data = null
+                };
+            }
+            catch (Exception ex)
+            {
+                return new GenericResponses()
+                {
+                    Status = HttpStatusCode.BadRequest.ToString(),
+                    Message = $"Failed to delete gig, {ex.Message}",
+                    Data = null
+                }; 
+            }
+        }
     }
 }

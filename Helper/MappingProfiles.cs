@@ -11,6 +11,7 @@ namespace WeConnectAPI.Helper
         {
             CreateMap<UserProfileDto, UserProfile>();
             CreateMap<GigModelDto, GigModel>();
+            CreateMap<EducationDto, Education>();
         }
     }
 }

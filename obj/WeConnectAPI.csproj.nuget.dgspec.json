@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\akina\\projects\\ASPNET\\WeConnectAPI\\WeConnectAPI\\WeConnectAPI.csproj": {}
+    "C:\\Users\\akina\\OneDrive\\Desktop\\projects\\dotnet\\WeConnectAPI\\WeConnectAPI\\WeConnectAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\akina\\projects\\ASPNET\\WeConnectAPI\\WeConnectAPI\\WeConnectAPI.csproj": {
+    "C:\\Users\\akina\\OneDrive\\Desktop\\projects\\dotnet\\WeConnectAPI\\WeConnectAPI\\WeConnectAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\akina\\projects\\ASPNET\\WeConnectAPI\\WeConnectAPI\\WeConnectAPI.csproj",
+        "projectUniqueName": "C:\\Users\\akina\\OneDrive\\Desktop\\projects\\dotnet\\WeConnectAPI\\WeConnectAPI\\WeConnectAPI.csproj",
         "projectName": "WeConnectAPI",
-        "projectPath": "C:\\Users\\akina\\projects\\ASPNET\\WeConnectAPI\\WeConnectAPI\\WeConnectAPI.csproj",
+        "projectPath": "C:\\Users\\akina\\OneDrive\\Desktop\\projects\\dotnet\\WeConnectAPI\\WeConnectAPI\\WeConnectAPI.csproj",
         "packagesPath": "C:\\Users\\akina\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\akina\\projects\\ASPNET\\WeConnectAPI\\WeConnectAPI\\obj\\",
+        "outputPath": "C:\\Users\\akina\\OneDrive\\Desktop\\projects\\dotnet\\WeConnectAPI\\WeConnectAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\akina\\AppData\\Roaming\\NuGet\\NuGet.Config",

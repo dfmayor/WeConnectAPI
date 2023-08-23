@@ -134,7 +134,7 @@ namespace WeConnectAPI.Controllers
                 {
                     Status = HttpStatusCode.BadRequest.ToString(),
                     Message = $"User Profile Update Failed: {ex.Message}",
-                    Data = {}
+                    Data = null
                 };
             }
         }

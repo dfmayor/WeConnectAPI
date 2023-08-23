@@ -12,6 +12,7 @@ using WeConnectApi.Services.RoleServices;
 using WeConnectAPI.Data;
 using WeConnectAPI.Models.UserModels;
 using WeConnectAPI.Services.UserServices;
+using WeConnectAPI.Services.EducationServices;
 using MediatR;
 using WeConnectAPI.Services.GigServices;
 using WatchDog;
@@ -49,6 +50,7 @@ builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IUserProfileService, UserProfileService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IGigModelService, GigModelService>();
+builder.Services.AddScoped<IEducationService, EducationService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
@@ -109,8 +111,8 @@ app.MapControllers();
 
 app.UseWatchDogExceptionLogger();
 app.UseWatchDog(opt => {
-    opt.WatchPageUsername = "mayowafunmi";
-    opt.WatchPagePassword = "mayowafunmi";
+    opt.WatchPageUsername = builder.Configuration["WatchDogParams:Username"];
+    opt.WatchPagePassword = builder.Configuration["WatchDogParams:Password"];
 });
 
 app.Run();

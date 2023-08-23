@@ -1,0 +1,7 @@
+Models
+Add to ApplicationDbContext
+create service interface
+implement service interface
+command/Query
+handlers
+controllers
